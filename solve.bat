@@ -4,11 +4,13 @@ if %errorlevel% == 0 (
     tenpuzzle
 ) else (
     echo installing command...
-    where /q git
+    call (exit /b 0)
+    where /q pip
     if %errorlevel% == 0 (
-        git 
+        pip install git+https://github.com/aiwister/tenpuzzle.git
+        tenpuzzle
     ) else (
-        echo Please install Git!
+        echo Please install pip!
 )
 )
 pause
