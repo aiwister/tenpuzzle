@@ -1,5 +1,5 @@
 @echo off
-where /q tenpuzzle
+where /q z
 if %errorlevel% == 0 (
     tenpuzzle
 ) else (
