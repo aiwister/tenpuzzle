@@ -1,0 +1,2 @@
+[console_scripts]
+tenpuzzle = main:task
