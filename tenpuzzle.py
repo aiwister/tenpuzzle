@@ -1,10 +1,14 @@
+import os
+os.environ["OPENBLAS_NUM_THREADS"] = "16"
+os.environ["MKL_NUM_THREADS"] = "16"
+os.environ["VECLIB_NUM_THREADS"] = "16"
 from tqdm import tqdm
-import itertools
-from itertools import combinations
+import numpy as np
 from multiprocessing import Pool
 import sys
 import time
 import threading
+import itertools
 
 def products(x):
     for i in x[-1]:
@@ -15,7 +19,9 @@ def insert(nums):
     n1,n2=convert(s1),convert(s2)
     return [f"{s1}+{s2}", f"{s1}-{s2}", f"{s2}-{s1}", f"{n1}*{n2}", f"{n1}/{n2}", f"{n2}/{n1}"]
 
-
+def numpy_combinations(x):
+    idx = np.stack(np.triu_indices(len(x), k=1), axis=-1)
+    return x[idx]
 
 def convert(i):
     return f"({i})" if ("+" in i or "-" in i) else i
@@ -31,7 +37,7 @@ def execute(i,targetn):
 
 def get1(x):
     if len(x)>2:
-        for comb in combinations(x,2):
+        for comb in numpy_combinations(np.array(x)):
             y=sorted(x,key=(list(comb)+x).index)[2:]
             y.append(insert(comb))
             for i in products(y):
@@ -54,16 +60,13 @@ def animate():
 def task():
     global done
     p2=Pool(16)
-    s=time.time()
-    print("input numbers with space like '1 2 3 4'")
-    x=input().split(" ")
+    x=input("input numbers with space like '1 2 3 4' > ").split(" ")
     targetn=int(input("input target number. > "))
     t = threading.Thread(target=animate)
     t.start()
-    y=set(get1(x))
-    z=list(map(lambda i:(i,targetn),y))
+    s=time.time()
     done=True
-    print(list(filter(lambda i:i,p2.starmap(execute,tqdm(z)))))
+    print(list(filter(lambda i:i,p2.starmap(execute,tqdm(list(map(lambda i:(i,targetn),set(get1(x)))))))))
     e=time.time()
     print(f"Took {e-s}s")
 

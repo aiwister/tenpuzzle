@@ -5,4 +5,5 @@ tenpuzzle.egg-info/PKG-INFO
 tenpuzzle.egg-info/SOURCES.txt
 tenpuzzle.egg-info/dependency_links.txt
 tenpuzzle.egg-info/entry_points.txt
+tenpuzzle.egg-info/requires.txt
 tenpuzzle.egg-info/top_level.txt
