@@ -11,6 +11,8 @@ if %errorlevel% == 0 (
     if %errorlevel% == 0 (
         pip install git+https://github.com/aiwister/tenpuzzle.git
         tenpuzzle
+        pause
+        exit /b
     ) else (
         echo Please install pip!
 )

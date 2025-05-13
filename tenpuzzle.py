@@ -5,6 +5,7 @@ os.environ["VECLIB_NUM_THREADS"] = "16"
 from tqdm import tqdm
 import numpy as np
 from multiprocessing import Pool
+from itertools import combinations
 import sys
 import time
 import threading
@@ -60,13 +61,14 @@ def animate():
 def task():
     global done
     p2=Pool(16)
-    x=input("input numbers with space like '1 2 3 4' > ").split(" ")
+    x=input("input numbers with space like '1 2 3 4' > ").split()
     targetn=int(input("input target number. > "))
     t = threading.Thread(target=animate)
     t.start()
     s=time.time()
+    y=set(get1(x))
     done=True
-    print(list(filter(lambda i:i,p2.starmap(execute,tqdm(list(map(lambda i:(i,targetn),set(get1(x)))))))))
+    print(list(filter(lambda i:i,p2.starmap(execute,tqdm(list(map(lambda i:(i,targetn),y)))))))
     e=time.time()
     print(f"Took {e-s}s")
 
