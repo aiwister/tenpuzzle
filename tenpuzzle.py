@@ -39,7 +39,9 @@ def execute(i,targetn):
 def get1(x):
     if len(x)>2:
         for comb in numpy_combinations(np.array(x)):
-            y=sorted(x,key=(list(comb)+x).index)[2:]
+            y=copy.deepcopy(x)
+            for i in comb:
+                y.remove(i)
             y.append(insert(comb))
             for i in products(y):
                 yield from get1(i)
