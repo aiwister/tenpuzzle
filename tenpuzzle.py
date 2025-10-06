@@ -1,4 +1,5 @@
 import os
+import copy
 os.environ["OPENBLAS_NUM_THREADS"] = "16"
 os.environ["MKL_NUM_THREADS"] = "16"
 os.environ["VECLIB_NUM_THREADS"] = "16"
